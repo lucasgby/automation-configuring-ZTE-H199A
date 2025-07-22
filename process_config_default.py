@@ -6,7 +6,7 @@ from navigate_system_management import navigate_to_restore_page
 from upload_restore_default import upload_restore_default
 from get_resource_path import get_resource_path
 
-def process_config_default():
+def process_config_default(url):
     USERNAME = "multipro"
     PASSWORD = "multipro"
     BIN_FILE_PATH = get_resource_path("assets/default_config.bin")
@@ -14,7 +14,7 @@ def process_config_default():
     driver = create_chrome_driver()
 
     try:
-        driver.get("http://192.168.1.1")
+        driver.get(url)
         time.sleep(2)
 
         login_to_router(driver, USERNAME, PASSWORD)

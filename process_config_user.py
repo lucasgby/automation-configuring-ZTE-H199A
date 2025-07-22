@@ -6,15 +6,15 @@ from navigate_system_management import navigate_to_restore_page
 from upload_restore_user import upload_restore_user
 from get_resource_path import get_resource_path
 
-def process_config_user():
+def process_config_user(url):
     USERNAME = "multipro"
-    PASSWORD = "Vd@tJg2S"
+    PASSWORD = "multipro"
     BIN_FILE_PATH = get_resource_path("assets/config.bin")
 
     driver = create_chrome_driver()
     
     try:
-        driver.get("http://192.168.99.1")
+        driver.get(url)
         time.sleep(2)
 
         login_to_router(driver, USERNAME, PASSWORD)
