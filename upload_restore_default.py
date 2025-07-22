@@ -1,0 +1,40 @@
+import time
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from check_path_upload_exist import check_path_exist
+
+def upload_restore_default(driver, file_path):
+  wait = WebDriverWait(driver, 10)
+  
+  try:
+    # Dar Scroll e Clica em "Configuração de Gerência Padrão"
+    element = wait.until(EC.presence_of_element_located((By.ID, "defCfgMgr")))
+    driver.execute_script("arguments[0].scrollIntoView(true);", element)
+    wait.until(EC.element_to_be_clickable((By.ID, "defCfgMgr"))).click()
+    time.sleep(1)
+        
+    # Clicar em Configuração da Restauração Padrão
+    wait.until(EC.element_to_be_clickable((By.ID, "DefConfUploadBar"))).click()
+    time.sleep(1)
+        
+    abs_path = check_path_exist(file_path)    
+    
+    upload_input = driver.find_element(By.ID, "defConfigUpload")
+    print(f"[Info] Enviando arquivo: {abs_path}")
+    upload_input.send_keys(abs_path)
+    time.sleep(2)
+    
+    # Clicar no Botão para fazer Upload
+    driver.find_element(By.ID, "Btn_Upload").click()
+    time.sleep(1)
+    
+    driver.find_element(By.ID, "confirmOK").click()
+    time.sleep(1)
+    
+    print("[Sucesso] Restauração do config_default iniciada com sucesso.")
+    driver.quit()
+  except Exception as e:
+    print(f"[Erro na restauração] {e}")
